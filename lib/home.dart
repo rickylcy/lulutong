@@ -1,23 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:lulutong/coffee_prefs.dart';
 import 'package:lulutong/styled_body_text.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Coffe Id",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            )),
-        backgroundColor: Colors.brown[700],
-        centerTitle: true,
+        title: const Text('Maps Sample App'),
+        elevation: 2,
+        backgroundColor: Colors.green[700],
+        foregroundColor: Colors.white,
       ),
-      body: Column(
+      body: Container(
+        child: GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: _center,
+            zoom: 11.0,
+          ),
+        ),
+      ), /*Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -29,6 +48,7 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: const CoffeePrefs(),
           ),
+          
           Expanded(
             child: Image.asset(
               'assets/img/coffee_bg.jpg',
@@ -37,7 +57,7 @@ class Home extends StatelessWidget {
             ),
           )
         ],
-      ),
+      ),*/
     );
   }
 }

@@ -1,27 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:lulutong/home.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
-  runApp(const MaterialApp(home: Home()));
+  runApp(MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.green[700],
+      ),
+      home: const Home()));
 }
 
-class Sandbox extends StatelessWidget {
+class Sandbox extends StatefulWidget {
   const Sandbox({super.key});
 
   @override
+  State<Sandbox> createState() => _SandboxState();
+}
+
+class _SandboxState extends State<Sandbox> {
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Sandbox'), backgroundColor: Colors.grey),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(height: 100, color: Colors.red, child: const Text('one')),
-            Container(
-                height: 200, color: Colors.green, child: const Text('two')),
-            Container(
-                height: 300, color: Colors.blue, child: const Text('three')),
-          ],
-        ));
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.green[700],
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Maps Sample App'),
+          elevation: 2,
+        ),
+        body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: _center,
+            zoom: 11.0,
+          ),
+        ),
+      ),
+    );
   }
 }

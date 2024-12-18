@@ -5,8 +5,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 void main() {
   runApp(MaterialApp(
       theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.green[700],
+        primarySwatch: Colors.green, // App-wide primary color
+        appBarTheme: const AppBarTheme(
+          color: Colors.green, // Top Nav Bar background color
+          elevation: 2, // Subtle shadow
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
       ),
       home: const Home()));
 }
